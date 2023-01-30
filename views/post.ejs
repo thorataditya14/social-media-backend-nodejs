@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+
+<h1> Post <%= post._id %> </h1>
+
+<div>
+    <img src="<%= post.img %>" alt="post by <%= post.userId %>" width="256px">
+    <p> <strong> <%= post.username %> : </strong> <%= post.caption %> </p>
+    <p> <%= post.likes.length %> likes </p>
+</div>
+
+<% if (post.likes.includes(currUser.username)) { %>
+    <form action="/posts/<%= post._id %>/like?_method=DELETE" method="POST">
+        <button>UnLike</button>
+    </form>
+    <% } else { %>
+    <form action="/posts/<%= post._id %>/like" method="POST">
+        <button>Like</button>
+    </form>
+<% } %>
+
+
+<%- include('partials/footer') %>

@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+
+<h1> Followers - <%= userDetails.username %> </h1>
+
+<ol>
+    <% userDetails.followers.forEach((follower) => { %>
+        <li>
+            <a href="/users/<%= follower %>">
+                <%= follower %>
+            </a>
+        </li>
+    <% }) %>
+</ol>
+
+
+
+<%- include('partials/footer') %>

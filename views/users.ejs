@@ -1,0 +1,51 @@
+<%- include('partials/header') %>
+
+<h1>Users</h1>
+
+<table>
+    <tr>
+        <th>_id</th>
+        <th></th>
+        <th>Username</th>
+        <th>Email</th>
+
+        <th>CreatedAt</th>
+        <th>UpdatedAt</th>
+        <th>IsAdmin</th>
+
+        <th>Followers</th>
+        <th>Following</th>
+        <th>Posts</th>
+    </tr>
+    
+    <% allUsers.forEach((user) => { %>
+        <tr>
+            <td> <%= user._id %> </td>
+
+            <td>
+                <img src="<%= user.profileImg %>" alt="" width="32px">
+            </td>
+
+            <td>
+                <a href="/users/<%= user.username %>">
+                    <%= user.username %>
+                </a>
+            </td>
+            <td> <%= user.email %> </td>
+
+            <td> <%= user.createdAt %> </td>
+            <td> <%= user.updatedAt %> </td>
+
+            <td> <%= user.isAdmin %> </td>
+
+            <td> <%= user.followers %> </td>
+            <td> <%= user.following %> </td>
+            <td> <%= user.posts %> </td>
+        </tr>
+    <% }) %>
+
+</table>
+
+
+
+<%- include('partials/footer') %>

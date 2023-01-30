@@ -1,0 +1,72 @@
+<%- include('partials/header') %>
+
+
+<h1><%= userDetails.username %></h1>
+
+<img src="<%= userDetails.profileImg %>" alt="<%= userDetails.username%> profile pic" width="128px">
+<br>
+
+<a href="">
+    <%= userDetails.posts.length %> Posts
+</a>
+<br>
+
+<a href="/users/<%= userDetails.username %>/followers">
+    <%= userDetails.followers.length %> Followers
+</a>
+<br>
+
+<a href="/users/<%= userDetails.username %>/following">
+    <%= userDetails.following.length %> Following
+</a>
+<br>
+
+
+    <% if (userDetails.followers.includes(currUser.username)) { %>
+        <form action="/users/<%= userDetails.username %>/follow?_method=DELETE" method="POST">
+            <button>Unfollow</button>
+        </form>
+        <% } else { %>
+        <form action="/users/<%= userDetails.username %>/follow" method="POST">
+            <button>Follow</button>
+        </form>
+    <% } %>
+
+    
+
+
+
+
+
+
+<h2> Posts by <%= userDetails.username %> </h2>
+<% allPosts.forEach((post) => { %>
+    
+    <% if (post.username === userDetails.username) { %>
+        <div>
+            <img src="<%= post.img %>" alt="post by <%= post.userId %>" width="256px">
+            <br> <br>
+            <strong> <%= post.username %> : </strong>
+            <%= post.caption %> <br>
+            <%= post.likes.length %> likes
+        </div>
+        
+        <% if (post.likes.includes(currUser.username)) { %>
+            <form action="/posts/<%= post._id %>/like?_method=DELETE" method="POST">
+                <button>UnLike</button>
+            </form>
+            <% } else { %>
+            <form action="/posts/<%= post._id %>/like" method="POST">
+                <button>Like</button>
+            </form>
+        <% } %>
+
+        <br>
+        <hr>
+        <br>
+    <% } %>
+<% }) %>
+
+    
+
+<%- include('partials/footer') %>

@@ -1,0 +1,47 @@
+<%- include('partials/header') %>
+
+<h1>Posts</h1>
+
+
+
+
+
+<% allPosts.forEach((post) => { %>
+    
+    <div>
+        <img src="<%= post.img %>" alt="post by <%= post.userId %>" width="256px">
+        <br>
+        <br>
+
+        <strong> <%= post.username %> : </strong>
+        <%= post.caption %>
+
+        
+        <p> <%= post.likes.length %> likes </p>
+    </div>
+
+
+    
+    <% if (post.likes.includes(currUser.username)) { %>
+        <form action="/posts/<%= post._id %>/like?_method=DELETE" method="POST">
+            <button>UnLike</button>
+        </form>
+        <% } else { %>
+        <form action="/posts/<%= post._id %>/like" method="POST">
+            <button>Like</button>
+        </form>
+    <% } %>
+
+    <br>
+    <hr>
+    <br>
+
+
+<% }) %>
+
+
+
+
+
+
+<%- include('partials/footer') %>

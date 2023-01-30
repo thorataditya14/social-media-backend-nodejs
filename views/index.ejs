@@ -1,0 +1,95 @@
+<%- include('partials/header') %>
+
+
+<h1> Hi <%= currUser.username %> ! </h1>
+
+
+
+
+
+<h1><%= currUser.username %></h1>
+
+<img src="<%= currUser.profileImg %>" alt="<%= currUser.username%> profile pic" width="128px">
+<br>
+
+<a href="#posts">
+    <%= currUser.posts.length %> Posts
+</a>
+<br>
+
+<a href="/users/<%= currUser.username %>/followers">
+    <%= currUser.followers.length %> Followers
+</a>
+<br>
+
+<a href="/users/<%= currUser.username %>/following">
+    <%= currUser.following.length %> Following
+</a>
+<br>
+
+
+
+<form action="/posts/new" method="POST">
+    <div>
+        <label for="img">Image Link</label>
+        <input id="img" name="img" type="text" required>
+    </div>
+    <div>
+        <label for="caption">Caption</label>
+        <textarea id="caption" name="caption" cols="20" rows="5"></textarea>
+    </div>
+    <button type="submit">Post</button>
+</form>
+<br>
+
+
+<form action="/logout?_method=DELETE" method="POST">
+    <button type="submit">Log Out</button>
+</form>
+<br>
+
+
+<% if (currUser.isAdmin) { %>
+    <form action="/users" method="GET">
+        <button type="submit">See All Users</button>
+    </form>
+    <br>
+<% } %>
+
+
+<form action="/posts" method="GET">
+    <button type="submit">See All Posts</button>
+</form>
+<br>
+
+<h2 id="posts"> Posts by <%= user.username %> </h2>
+<% allPosts.forEach((post) => { %>
+    
+    <% if (post.username === currUser.username) { %>
+        <div>
+            <img src="<%= post.img %>" alt="post by <%= post.userId %>" width="256px">
+            <br> <br>
+            <strong> <%= post.username %> : </strong>
+            <%= post.caption %> <br>
+            <%= post.likes.length %> likes
+        </div>
+        
+        <% if (post.likes.includes(currUser.username)) { %>
+            <form action="/posts/<%= post._id %>/like?_method=DELETE" method="POST">
+                <button>UnLike</button>
+            </form>
+            <% } else { %>
+            <form action="/posts/<%= post._id %>/like" method="POST">
+                <button>Like</button>
+            </form>
+        <% } %>
+
+        <br>
+        <hr>
+        <br>
+    <% } %>
+<% }) %>
+
+
+
+<%- include('partials/footer') %>
